@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace MatrixOperations
+﻿namespace MatrixOperations
 {
-    public class FourNonDiagonalNeighboursNoAdjacentNansStrategy
+    public class FourNonDiagonalNeighboursNoAdjacentNansStrategy : IInterpolationStrategy
     {
     }
 }
