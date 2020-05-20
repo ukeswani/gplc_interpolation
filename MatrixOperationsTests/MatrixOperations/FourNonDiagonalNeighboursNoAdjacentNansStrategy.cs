@@ -14,9 +14,12 @@ namespace MatrixOperations
             var cumulativeValue = 0.0d;
             var numberOfValidNeighbours = 0;
 
-            for (var i = rowIndex == 0 ? rowIndex : rowIndex - 1; i <= rowIndex + 1; i++)
+            uint startingRowIndex = rowIndex == 0 ? rowIndex : rowIndex - 1;
+            uint startingColumnIndex = columnIndex == 0 ? columnIndex : columnIndex - 1;
+
+            for (var i = startingRowIndex; i <= rowIndex + 1; i++)
             {
-                for (var j = columnIndex == 0 ? columnIndex : columnIndex - 1; j <= columnIndex + 1; j++)
+                for (var j = startingColumnIndex; j <= columnIndex + 1; j++)
                 {
                     if (NotAValidNeighbour(rowIndex, columnIndex, rowUpperBounds, columnUpperBounds, i, j))
                     {
@@ -28,11 +31,7 @@ namespace MatrixOperations
                 }
             }
 
-
-
             var interpolatedValue = cumulativeValue/numberOfValidNeighbours;
-            
-
             return interpolatedValue;
         }
 
