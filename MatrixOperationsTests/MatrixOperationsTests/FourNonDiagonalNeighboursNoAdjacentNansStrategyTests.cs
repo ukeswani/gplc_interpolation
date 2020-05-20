@@ -1,3 +1,4 @@
+using MatrixOperations;
 using NUnit.Framework;
 
 namespace MatrixOperationsTests
@@ -10,9 +11,11 @@ namespace MatrixOperationsTests
         }
 
         [Test]
-        public void Test1()
+        public void GivenNoObject_WhenStrategyConstructed_ThenReturnsAnInstanceOfIInterpolationStrategy()
         {
-            Assert.Pass();
+            var strategy = new FourNonDiagonalNeighboursNoAdjacentNansStrategy();
+
+            Assert.That(strategy, Is.InstanceOf<IInterpolationStrategy>());
         }
     }
 }

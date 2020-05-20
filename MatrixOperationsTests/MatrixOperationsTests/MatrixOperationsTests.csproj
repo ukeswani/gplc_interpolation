@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MatrixOperations\MatrixOperations.csproj" />
+  </ItemGroup>
+
 </Project>
