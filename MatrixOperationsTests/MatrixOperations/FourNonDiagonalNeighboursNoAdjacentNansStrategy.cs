@@ -4,14 +4,14 @@ namespace MatrixOperations
 {
     public class FourNonDiagonalNeighboursNoAdjacentNansStrategy : IInterpolationStrategy
     {
-        public double Interpolate(uint rowIndex, uint columnIndex, double[,] matrix)
+        public double InterpolateValue(uint rowIndex, uint columnIndex, double[,] matrix)
         {
             ParametersGuard(rowIndex, columnIndex, matrix);
 
             var rowUpperBounds = (uint)matrix.GetUpperBound(0);
             var columnUpperBounds = (uint)matrix.GetUpperBound(1);
 
-            var cumulativeValue = 0.0d;
+            var cumulativeValueOfValidNeighbours = 0.0d;
             var numberOfValidNeighbours = 0;
 
             uint startingRowIndex = rowIndex == 0 ? rowIndex : rowIndex - 1;
@@ -21,29 +21,35 @@ namespace MatrixOperations
             {
                 for (var j = startingColumnIndex; j <= columnIndex + 1; j++)
                 {
-                    if (NotAValidNeighbour(rowIndex, columnIndex, rowUpperBounds, columnUpperBounds, i, j))
+                    if (NeighbourDoesNotExist(rowUpperBounds, columnUpperBounds, i, j)
+                        ||
+                        InvalidNeighbour(rowIndex, columnIndex, i, j))
                     {
                         continue;
                     }
 
-                    cumulativeValue += matrix[i, j];
+                    cumulativeValueOfValidNeighbours += matrix[i, j];
                     numberOfValidNeighbours += 1;
                 }
             }
 
-            var interpolatedValue = cumulativeValue/numberOfValidNeighbours;
+            var interpolatedValue = Math.Round(cumulativeValueOfValidNeighbours/numberOfValidNeighbours, 6);
             return interpolatedValue;
         }
 
-        private static bool NotAValidNeighbour(uint rowIndex, uint columnIndex, uint rowUpperBounds, uint columnUpperBounds, uint i, uint j)
+        private static bool NeighbourDoesNotExist(uint rowUpperBounds, uint columnUpperBounds, uint i, uint j)
+        {
+            return j > columnUpperBounds
+                   ||
+                   i > rowUpperBounds;
+        }
+
+        private static bool InvalidNeighbour(uint rowIndex, uint columnIndex, uint i, uint j)
         {
             return (i != rowIndex && j != columnIndex)
                    ||
-                   (i == rowIndex && j == columnIndex)
-                   ||
-                   j > columnUpperBounds
-                   ||
-                   i > rowUpperBounds;
+                   (i == rowIndex && j == columnIndex);
+
         }
 
         private static void ParametersGuard(uint rowIndex, uint columnIndex, double[,] matrix)

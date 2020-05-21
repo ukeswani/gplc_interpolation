@@ -20,7 +20,7 @@ namespace MatrixOperationsTests
         {
             IInterpolationStrategy strategy = new FourNonDiagonalNeighboursNoAdjacentNansStrategy();
 
-            Assert.DoesNotThrow(() => strategy.Interpolate((uint)0, (uint)0, new double[1,1]));
+            Assert.DoesNotThrow(() => strategy.InterpolateValue((uint)0, (uint)0, new double[1,1]));
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace MatrixOperationsTests
         {
             IInterpolationStrategy strategy = new FourNonDiagonalNeighboursNoAdjacentNansStrategy();
 
-            Assert.Throws<ArgumentNullException>(() => strategy.Interpolate((uint)0, (uint)0, null));
+            Assert.Throws<ArgumentNullException>(() => strategy.InterpolateValue((uint)0, (uint)0, null));
         }
 
         [TestCaseSource(nameof(InvalidRowAndColumnIndices))]
@@ -37,7 +37,7 @@ namespace MatrixOperationsTests
         {
             IInterpolationStrategy strategy = new FourNonDiagonalNeighboursNoAdjacentNansStrategy();
 
-            Assert.Throws<ArgumentException>(() => strategy.Interpolate(rowIndex, columnIndex, matrix));
+            Assert.Throws<ArgumentException>(() => strategy.InterpolateValue(rowIndex, columnIndex, matrix));
         }
 
         [TestCaseSource(nameof(InterpolatedMatrixAsExpected))]
@@ -48,7 +48,7 @@ namespace MatrixOperationsTests
             IInterpolationStrategy strategy = new FourNonDiagonalNeighboursNoAdjacentNansStrategy();
 
             // Act
-            double interpolatedValue = strategy.Interpolate(rowIndex, columnIndex, matrix);
+            double interpolatedValue = strategy.InterpolateValue(rowIndex, columnIndex, matrix);
 
             // Assert
             Assert.That(Math.Abs(interpolatedValue - expectedInterpolatedValue),

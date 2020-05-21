@@ -24,7 +24,7 @@ namespace MatrixOperations
                 {
                     if (double.IsNaN(matrix[i, j]))
                     {
-                        matrix[i, j] = _interpolationStrategy.Interpolate(i, j, matrix);
+                        matrix[i, j] = _interpolationStrategy.InterpolateValue(i, j, matrix);
                     }
                 }
             }
