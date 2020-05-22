@@ -27,15 +27,6 @@ namespace Interpolator
             }
         }
 
-
-        private static void ArgumentsGuard(string[] args)
-        {
-            if (args.Length < 4)
-            {
-                throw new ArgumentException(Usage());
-            }
-        }
-
         private static (string inputFile, string outputFile) GetArgumentValues(string[] args)
         {
             ArgumentsGuard(args);
@@ -53,7 +44,6 @@ namespace Interpolator
                     case "-o":
                         outputFile = args[++i];
                         break;
-                    case "?":
                     default:
                         throw new ArgumentException(Usage());
                 }   
@@ -61,6 +51,15 @@ namespace Interpolator
 
             return (inputFile, outputFile);
         }
+
+        private static void ArgumentsGuard(string[] args)
+        {
+            if (args.Length < 4)
+            {
+                throw new ArgumentException(Usage());
+            }
+        }
+
 
         private static string Usage()
         {
